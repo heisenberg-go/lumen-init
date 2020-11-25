@@ -2,8 +2,29 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
+/*
+|-----------------------------------
+| 区分环境 php.ini 增加配置项  
+|-----------------------------------
+| app_env=local 	    //本地环境
+| app_env=dev 			//开发环境
+| app_env=testing 		//测试环境
+| app_env=staging 		//预发布环境
+| app_env=prod 	        //生产环境
+|
+*/	
+
+$appEnvFile = null;
+if ($appEnv = get_cfg_var('app_env')) {
+	$file = ".env.$appEnv";
+    if (file_exists(dirname(__DIR__) . '/' . $file)) {
+        $appEnvFile = $file;
+    }
+}
+
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
-    dirname(__DIR__)
+    dirname(__DIR__),
+    $appEnvFile
 ))->bootstrap();
 
 date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
@@ -25,7 +46,7 @@ $app = new Laravel\Lumen\Application(
 
 // $app->withFacades();
 
-// $app->withEloquent();
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +115,7 @@ $app->configure('app');
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+$app->register(Urameshibr\Providers\FormRequestServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -109,7 +131,8 @@ $app->configure('app');
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {
-    require __DIR__.'/../routes/web.php';
+    //require __DIR__.'/../routes/web.php';  暂时用不到web
+    require __DIR__.'/../routes/api.php';
 });
 
 return $app;

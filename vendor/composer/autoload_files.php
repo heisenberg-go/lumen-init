@@ -26,4 +26,6 @@ return array(
     '253c157292f75eb38082b5acb06f3f01' => $vendorDir . '/nikic/fast-route/src/functions.php',
     'b6b991a57620e2fb6b2f66f03fe9ddc2' => $vendorDir . '/symfony/string/Resources/functions.php',
     'bee9632da3ca00a99623b9c35d0c4f8b' => $vendorDir . '/laravel/lumen-framework/src/helpers.php',
+    '2601e6728a94e09e7b5a73b923480be7' => $baseDir . '/app/Helpers/common.php',
+    'abda66ba753ae4e06aef5f7b4d1b1250' => $baseDir . '/app/Constants/code.php',
 );
